@@ -3,6 +3,7 @@ package com.fengxiang.service.impl;
 import com.fengxiang.constant.MessageConstant;
 import com.fengxiang.constant.PasswordConstant;
 import com.fengxiang.constant.StatusConstant;
+import com.fengxiang.context.BaseContext;
 import com.fengxiang.dto.EmployeeDTO;
 import com.fengxiang.dto.EmployeeLoginDTO;
 import com.fengxiang.dto.EmployeePageQueryDTO;
@@ -101,6 +102,62 @@ public class EmployeeServiceImpl implements EmployeeService {
         Page<Employee> page = (Page<Employee>) list;
 
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+
+    /**
+     * 启用禁用员工账号
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        // 获取当前登录员工ID（从JWT或上下文中获取）
+        Long currentEmpId = BaseContext.getCurrentId();
+
+        // 判断是否为管理员（如admin账户）
+        Employee currentEmployee = employeeMapper.getById(currentEmpId);
+
+        // 如果不是管理员，则只能操作自己的账户
+        if (!"admin".equals(currentEmployee.getUsername()) && !currentEmpId.equals(id)) {
+            throw new RuntimeException("权限不足，只能操作自己的账户");
+        }
+        Employee employee = Employee.builder()
+                .id(id)
+                .status(status)
+                .build();
+
+        employeeMapper.update(employee);
+    }
+
+    /**
+     * 根据id查询员工
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee getById(Long id) {
+        Employee employee = employeeMapper.getById(id);
+        return employee;
+    }
+
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+
+        // 获取当前登录员工ID（从JWT或上下文中获取）
+        Long currentEmpId = BaseContext.getCurrentId();
+
+        // 判断是否为管理员（如admin账户）
+        Employee currentEmployee = employeeMapper.getById(currentEmpId);
+
+        // 如果不是管理员，则只能操作自己的账户
+        if (!"admin".equals(currentEmployee.getUsername()) && !currentEmpId.equals(employee.getId())) {
+            throw new RuntimeException("权限不足，只能操作自己的账户");
+        }
+
+        employeeMapper.update(employee);
     }
 
 }
