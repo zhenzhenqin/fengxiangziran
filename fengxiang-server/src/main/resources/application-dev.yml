@@ -3,6 +3,6 @@ fengxiang:
     driver-class-name: com.mysql.cj.jdbc.Driver
     host: localhost
     port: 3306
-    database: fengxiang
+    database: fengxiangziran
     username: root
     password: 1234

@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class Orders implements Serializable {
 
     /**
-     * 订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消
+     * 订单状态 1待付款 2待接单 3已接单 4送货中 5已完成 6已取消 7退款
      */
     public static final Integer PENDING_PAYMENT = 1;
     public static final Integer TO_BE_CONFIRMED = 2;
@@ -93,18 +93,6 @@ public class Orders implements Serializable {
     //预计送达时间
     private LocalDateTime estimatedDeliveryTime;
 
-    //配送状态  1立即送出  0选择具体时间
-    private Integer deliveryStatus;
-
     //送达时间
     private LocalDateTime deliveryTime;
-
-    //打包费
-    private int packAmount;
-
-    //餐具数量
-    private int tablewareNumber;
-
-    //餐具数量状态  1按餐量提供  0选择具体数量
-    private Integer tablewareStatus;
 }
