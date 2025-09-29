@@ -1,17 +1,26 @@
 package com.fengxiang.service.impl;
 
 import com.fengxiang.constant.MessageConstant;
+import com.fengxiang.constant.PasswordConstant;
 import com.fengxiang.constant.StatusConstant;
+import com.fengxiang.dto.EmployeeDTO;
 import com.fengxiang.dto.EmployeeLoginDTO;
+import com.fengxiang.dto.EmployeePageQueryDTO;
 import com.fengxiang.entity.Employee;
 import com.fengxiang.exception.AccountLockedException;
 import com.fengxiang.exception.AccountNotFoundException;
 import com.fengxiang.exception.PasswordErrorException;
 import com.fengxiang.mapper.EmployeeMapper;
+import com.fengxiang.result.PageResult;
 import com.fengxiang.service.EmployeeService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -54,6 +63,44 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //3、返回实体对象
         return employee;
+    }
+
+
+    /**
+     * 新增员工
+     * @param employeeDTO
+     */
+    @Override
+    public void save(EmployeeDTO employeeDTO) {
+
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+
+        //设置状态为启用
+        employee.setStatus(StatusConstant.DISABLE);  //设置默认状态为禁用
+
+        //设置初始密码 进行md5加密
+        employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));  //设置默认初始密码为123456
+
+        //存入数据库
+        employeeMapper.save(employee);
+    }
+
+    /**
+     * 分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
+    @Override
+    public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
+        //分页配置
+        PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
+
+        List<Employee> list = employeeMapper.pageQuery(employeePageQueryDTO);
+
+        Page<Employee> page = (Page<Employee>) list;
+
+        return new PageResult(page.getTotal(), page.getResult());
     }
 
 }
