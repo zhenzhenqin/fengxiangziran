@@ -15,6 +15,17 @@ spring:
       url: jdbc:mysql://${fengxiang.datasource.host}:${fengxiang.datasource.port}/${fengxiang.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${fengxiang.datasource.username}
       password: ${fengxiang.datasource.password}
+      # 添加Druid连接池配置
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
 
 mybatis:
   #mapper配置文件
@@ -27,12 +38,12 @@ mybatis:
 logging:
   level:
     com:
-      sky:
+      fengxiang:  # 修正包名
         mapper: debug
         service: info
         controller: info
 
-sky:
+fengxiang:
   jwt:
     # 设置jwt签名加密时使用的秘钥
     admin-secret-key: itcast
@@ -40,3 +51,9 @@ sky:
     admin-ttl: 720000000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+
+  alioss:
+    bucket-name: ${fengxiang.alioss.bucket-name}
+    endpoint: ${fengxiang.alioss.endpoint}
+    access-key-id: ${fengxiang.alioss.access-key-id}
+    access-key-secret: ${fengxiang.alioss.access-key-secret}

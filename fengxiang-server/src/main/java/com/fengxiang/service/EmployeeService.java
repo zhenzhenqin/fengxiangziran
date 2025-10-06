@@ -3,6 +3,7 @@ package com.fengxiang.service;
 import com.fengxiang.dto.EmployeeDTO;
 import com.fengxiang.dto.EmployeeLoginDTO;
 import com.fengxiang.dto.EmployeePageQueryDTO;
+import com.fengxiang.dto.PasswordEditDTO;
 import com.fengxiang.entity.Employee;
 import com.fengxiang.result.PageResult;
 
@@ -41,11 +42,18 @@ public interface EmployeeService {
      * @param id
      * @return
      */
-    Employee getById(Long id);
+    Employee getById(Integer id);
 
     /**
-     * 更新员工信息
+     * 编辑员工密码
+     * @param passwordEditDTO
+     */
+    void update(PasswordEditDTO passwordEditDTO);
+
+
+    /**
+     * 修改员工信息
      * @param employeeDTO
      */
-    void update(EmployeeDTO employeeDTO);
+    void updateEmployee(EmployeeDTO employeeDTO);
 }

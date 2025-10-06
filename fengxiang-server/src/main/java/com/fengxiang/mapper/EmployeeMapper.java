@@ -39,9 +39,10 @@ public interface EmployeeMapper {
     List<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 
     /**
-     * 根据id查询员工
+     * 更新员工信息
      * @param employee
      */
+    @AutoFill(value = OperationType.UPDATE)
     void update(Employee employee);
 
     /**
@@ -50,5 +51,5 @@ public interface EmployeeMapper {
      * @return
      */
     @Select("select * from employee where id = #{id}")
-    Employee getById(Long id);
+    Employee getById(Integer id);
 }

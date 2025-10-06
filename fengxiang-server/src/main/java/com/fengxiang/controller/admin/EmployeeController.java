@@ -4,6 +4,7 @@ import com.fengxiang.constant.JwtClaimsConstant;
 import com.fengxiang.dto.EmployeeDTO;
 import com.fengxiang.dto.EmployeeLoginDTO;
 import com.fengxiang.dto.EmployeePageQueryDTO;
+import com.fengxiang.dto.PasswordEditDTO;
 import com.fengxiang.entity.Employee;
 import com.fengxiang.properties.JwtProperties;
 import com.fengxiang.result.PageResult;
@@ -119,7 +120,7 @@ public class EmployeeController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根据id查询员工")
-    public Result<Employee> getById(@PathVariable Long id){
+    public Result<Employee> getById(@PathVariable Integer id){
         log.info("根据id查询员工,员工id:{}",id);
         Employee employee = employeeService.getById(id);
         return Result.success(employee);
@@ -127,14 +128,26 @@ public class EmployeeController {
 
     /**
      * 编辑员工信息
-     * @param employeeDTO
      * @return
      */
     @PutMapping
-    @ApiOperation(value = "编辑员工信息")
+    @ApiOperation("编辑员工信息")
     public Result update(@RequestBody EmployeeDTO employeeDTO){
-        log.info("更新员工信息:{}", employeeDTO);
-        employeeService.update(employeeDTO);
+        log.info("编辑员工信息:{}", employeeDTO);
+        employeeService.updateEmployee(employeeDTO);
+        return Result.success();
+    }
+
+    /**
+     * 编辑员工密码
+     * @param passwordEditDTO
+     * @return
+     */
+    @PutMapping("/editPassword")
+    @ApiOperation(value = "编辑员工信息")
+    public Result update(@RequestBody PasswordEditDTO passwordEditDTO){
+        log.info("更新员工信息:{}", passwordEditDTO);
+        employeeService.update(passwordEditDTO);
         return Result.success();
     }
 

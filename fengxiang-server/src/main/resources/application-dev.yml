@@ -6,3 +6,10 @@ fengxiang:
     database: fengxiangziran
     username: root
     password: 1234
+
+#阿里云配置
+  alioss:
+    bucket-name: fengxiangziran-c
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    access-key-id: ${ALIOSS_ACCESS_KEY_ID}
+    access-key-secret: ${ALIOSS_ACCESS_KEY_SECRET}

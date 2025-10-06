@@ -7,6 +7,7 @@ import com.fengxiang.context.BaseContext;
 import com.fengxiang.dto.EmployeeDTO;
 import com.fengxiang.dto.EmployeeLoginDTO;
 import com.fengxiang.dto.EmployeePageQueryDTO;
+import com.fengxiang.dto.PasswordEditDTO;
 import com.fengxiang.entity.Employee;
 import com.fengxiang.exception.AccountLockedException;
 import com.fengxiang.exception.AccountNotFoundException;
@@ -116,11 +117,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         Long currentEmpId = BaseContext.getCurrentId();
 
         // 判断是否为管理员（如admin账户）
-        Employee currentEmployee = employeeMapper.getById(currentEmpId);
+        Employee currentEmployee = employeeMapper.getById(Math.toIntExact(currentEmpId));
 
         // 如果不是管理员，则只能操作自己的账户
         if (!"admin".equals(currentEmployee.getUsername()) && !currentEmpId.equals(id)) {
-            throw new RuntimeException("权限不足，只能操作自己的账户");
+            throw new RuntimeException(MessageConstant.PERMISSION_DENIED);
         }
         Employee employee = Employee.builder()
                 .id(id)
@@ -136,28 +137,69 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return
      */
     @Override
-    public Employee getById(Long id) {
+    public Employee getById(Integer id) {
         Employee employee = employeeMapper.getById(id);
         return employee;
     }
 
+    /**
+     * 修改员工密码
+     * @param passwordEditDTO
+     */
     @Override
-    public void update(EmployeeDTO employeeDTO) {
+    public void update(PasswordEditDTO passwordEditDTO) {
         Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeDTO, employee);
+
+        //判断旧密码是否正确
+        Long id = BaseContext.getCurrentId();
+        Employee employeeDB = employeeMapper.getById(Math.toIntExact(id));
+
+        //判断员工是否存在
+        if (employeeDB == null) {
+            throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
+        }
+
+        //将输入的旧密码进行md5加密
+        String oldPassword = passwordEditDTO.getOldPassword();
+        oldPassword = DigestUtils.md5DigestAsHex(oldPassword.getBytes());
+
+        //判断旧密码是否正确
+        if (!oldPassword.equals(employeeDB.getPassword())) {
+            throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
+        }
+
+//        employee.setUpdateTime(LocalDateTime.now());
+        //设置修改人id
+        employee.setPassword(DigestUtils.md5DigestAsHex(passwordEditDTO.getNewPassword().getBytes()));
+        employee.setId(id);
+        employeeMapper.update(employee);
+    }
+
+    /**
+     * 修改员工信息
+     * @param employeeDTO
+     */
+    @Override
+    public void updateEmployee(EmployeeDTO employeeDTO) {
 
         // 获取当前登录员工ID（从JWT或上下文中获取）
         Long currentEmpId = BaseContext.getCurrentId();
 
         // 判断是否为管理员（如admin账户）
-        Employee currentEmployee = employeeMapper.getById(currentEmpId);
+        Employee currentEmployee = employeeMapper.getById(Math.toIntExact(currentEmpId));
 
         // 如果不是管理员，则只能操作自己的账户
-        if (!"admin".equals(currentEmployee.getUsername()) && !currentEmpId.equals(employee.getId())) {
-            throw new RuntimeException("权限不足，只能操作自己的账户");
+        if (!"admin".equals(currentEmployee.getUsername()) && !currentEmpId.equals(employeeDTO.getId())) {
+            throw new RuntimeException(MessageConstant.PERMISSION_DENIED);
         }
+
+
+        Employee employee = new Employee();
+
+        BeanUtils.copyProperties(employeeDTO, employee);
 
         employeeMapper.update(employee);
     }
+
 
 }

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fengxiang.mapper.GoodMapper">
+    <!--动态更新商品-->
+    <update id="update">
+        update good
+        <set>
+            <if test="name != null and name != '' ">name = #{name},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="image != null and image != '' ">image = #{image},</if>
+            <if test="description != null and description != '' ">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--批量删除商品-->
+    <delete id="deleteById">
+        delete from good where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--分页查询商品-->
+    <select id="pageQuery" resultType="com.fengxiang.entity.Good">
+        select * from good
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%', #{name}, '%')
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--插入商品-->
+    <insert id="insert">
+        insert into good (name, category_id, price, status, image, description, create_time, create_user, update_time, update_user)
+        values (#{name}, #{categoryId}, #{price}, #{status}, #{image}, #{description}, #{createTime}, #{createUser}, #{updateTime}, #{updateUser})
+    </insert>
+
+    <!--动态查询商品根据分类id-->
+    <select id="list" resultType="Good" parameterType="Good">
+        select * from good
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+</mapper>
