@@ -102,7 +102,6 @@ public class GoodServiceImpl implements GoodService {
 
         //删除菜品数据
         goodMapper.deleteById(ids);
-
     }
 
     /**

@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController("adminGoodController")
 @RequestMapping("/admin/dish")
-@Api("商品管理")
+@Api(tags = "商品管理")
 @Slf4j
 public class GoodController {
 

@@ -40,6 +40,7 @@
                 and status = #{status}
             </if>
         </where>
+        order by good.update_time desc
     </select>
 
     <!--插入商品-->
