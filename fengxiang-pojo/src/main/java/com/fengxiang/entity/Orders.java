@@ -22,8 +22,8 @@ public class Orders implements Serializable {
      * 订单状态 1待付款 2待发货 3已发货 4已完成 5已取消 6退款
      */
     public static final Integer PENDING_PAYMENT = 1;
-    public static final Integer TO_BE_SHIPPED = 2;    // 待发货（替代待接单）
-    public static final Integer SHIPPED = 3;          // 已发货（替代已接单+送货中）
+    public static final Integer TO_BE_SHIPPED = 2;    // 待发货
+    public static final Integer SHIPPED = 3;          // 已发货
     public static final Integer COMPLETED = 4;        // 已完成
     public static final Integer CANCELLED = 5;        // 已取消
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fengxiang.mapper.UserMapper">
+    <!--插入用户-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into user (openid, name, phone, sex, id_number, avatar, create_time)
+        values (#{openid}, #{name}, #{phone}, #{sex}, #{idNumber}, #{avatar}, #{createTime})
+    </insert>
+
+    <!--条件查询用户-->
+    <select id="getUserByDateAndStatus" resultType="java.lang.Integer">
+        select count(*) from user
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="beginTime != null">
+                and create_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null">
+                and create_time &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+</mapper>
