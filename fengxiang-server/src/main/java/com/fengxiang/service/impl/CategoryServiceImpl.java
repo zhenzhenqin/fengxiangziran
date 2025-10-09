@@ -104,4 +104,17 @@ public class CategoryServiceImpl implements CategoryService {
         }
         categoryMapper.delete(id);
     }
+
+    /**
+     * 查询分类
+     * @return
+     */
+    @Override
+    public List<Category> getCategoryList() {
+        //查询状态为启用的分类
+        Category category = new Category();
+        category.setStatus(StatusConstant.ENABLE);
+
+        return categoryMapper.getCategoryList(category);
+    }
 }

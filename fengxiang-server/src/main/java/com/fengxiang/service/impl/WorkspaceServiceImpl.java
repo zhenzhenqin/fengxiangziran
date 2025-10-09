@@ -95,12 +95,10 @@ public class WorkspaceServiceImpl implements WorkspaceService {
      */
     @Override
     public OrderOverViewVO getOrderOverView() {
-
-
         //对于没有订单状况查询的处理
         Map map = new HashMap<>();
-        map.put("beginTime", beginTime);
-        map.put("endTime", endTime);
+        /*map.put("beginTime", beginTime);
+        map.put("endTime", endTime);*/
 
         //返回全部订单
         Integer allOrdersNumber = orderMapper.getOrdersNumberByDateAndStatus(map); //获取订单总数
@@ -152,7 +150,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
      * @return
      */
     @Override
-    public GoodOverViewVO getDishOverView() {
+    public GoodOverViewVO getGoodOverView() {
         //已停售商品数量
         Good good = new Good();
         good.setStatus(0);

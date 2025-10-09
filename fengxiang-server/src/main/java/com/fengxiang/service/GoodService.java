@@ -55,4 +55,11 @@ public interface GoodService {
      * @param id
      */
     void startOrStop(Integer status, Long id);
+
+    /**
+     * 根据分类id查询商品
+     * @param good
+     * @return
+     */
+    List<GoodVO> getByCategoryId(Good good);
 }

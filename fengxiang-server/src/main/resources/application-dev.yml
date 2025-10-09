@@ -13,3 +13,17 @@ fengxiang:
     endpoint: oss-cn-hangzhou.aliyuncs.com
     access-key-id: ${ALIOSS_ACCESS_KEY_ID}
     access-key-secret: ${ALIOSS_ACCESS_KEY_SECRET}
+
+  wechat:
+    appid: wx07df1814836af599
+    secret: d35867b0ce00b69f9b6e8fc9c7317f42
+
+    #appid: wx4cdddbcd89c97cd0
+    #secret: f98f650e1a47cc5d755c0a8e9c887cf6
+    mchid: 1561414331
+    mchSerialNo: 4B3B3DC35414AD50B1B755BAF8DE9CC7CF407606
+    #privateKeyFilePath: classpath:cert/apiclient_key.pem
+    apiV3Key: 32823456789012345678901234567890
+    #weChatPayCertFilePath: classpath:cert/wechatpay_cert.pem
+    notifyUrl: https://71c37525.r22.cpolar.top/wechatpay/notify
+    refundNotifyUrl: https://71c37525.r22.cpolar.top/wechatpay/refundNotify

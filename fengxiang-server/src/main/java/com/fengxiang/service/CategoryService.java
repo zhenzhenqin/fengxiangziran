@@ -2,7 +2,10 @@ package com.fengxiang.service;
 
 import com.fengxiang.dto.CategoryDTO;
 import com.fengxiang.dto.CategoryPageQueryDTO;
+import com.fengxiang.entity.Category;
 import com.fengxiang.result.PageResult;
+
+import java.util.List;
 
 public interface CategoryService {
 
@@ -36,4 +39,10 @@ public interface CategoryService {
      * @param id
      */
     void delete(Long id);
+
+    /**
+     * 查询分类
+     * @return
+     */
+    List<Category> getCategoryList();
 }

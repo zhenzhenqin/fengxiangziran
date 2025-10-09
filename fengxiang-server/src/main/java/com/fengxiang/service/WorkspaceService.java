@@ -21,6 +21,6 @@ public interface WorkspaceService {
      * 获得菜品统计数据
      * @return
      */
-    GoodOverViewVO getDishOverView();
+    GoodOverViewVO getGoodOverView();
 
 }

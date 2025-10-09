@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -119,4 +120,23 @@ public class GoodServiceImpl implements GoodService {
         goodMapper.update(good);
     }
 
+    /**
+     * 根据分类id查询商品
+     * @param good
+     * @return
+     */
+    @Override
+    public List<GoodVO> getByCategoryId(Good good) {
+        //查询商品数据
+        List<Good> list = goodMapper.list(good);
+
+        //将商品数据封装到vo中返回
+        List<GoodVO> listVO = list.stream().map(item -> {
+            GoodVO goodVO = new GoodVO();
+            BeanUtils.copyProperties(item, goodVO);
+            return goodVO;
+        }).collect(Collectors.toList());
+
+        return listVO;
+    }
 }

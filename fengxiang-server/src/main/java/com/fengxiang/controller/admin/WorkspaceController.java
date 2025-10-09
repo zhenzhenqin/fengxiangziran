@@ -48,14 +48,14 @@ public class WorkspaceController {
     }
 
     /**
-     * 获得菜品总览数据
+     * 获得商品总览数据
      * @return
      */
-    @ApiOperation("获取菜品总览数据")
+    @ApiOperation("获取商品总览数据")
     @GetMapping("/overviewDishes")
-    public Result<GoodOverViewVO> getDishOverView(){
-        log.info("获取菜品总览数据");
-        GoodOverViewVO goodOverViewVO = workspaceService.getDishOverView();
+    public Result<GoodOverViewVO> getGoodOverView(){
+        log.info("获取商品总览数据");
+        GoodOverViewVO goodOverViewVO = workspaceService.getGoodOverView();
         return Result.success(goodOverViewVO);
     }
 }

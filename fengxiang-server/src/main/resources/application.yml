@@ -51,9 +51,26 @@ fengxiang:
     admin-ttl: 720000000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+    #微信用户登录的jwt签名加密时使用的秘钥
+    user-secret-key: mjcshuai
+    #微信用户登录的jwt过期时间
+    user-ttl: 720000000
+    #微信用户登录的jwt令牌名称
+    user-token-name: authentication
 
   alioss:
     bucket-name: ${fengxiang.alioss.bucket-name}
     endpoint: ${fengxiang.alioss.endpoint}
     access-key-id: ${fengxiang.alioss.access-key-id}
     access-key-secret: ${fengxiang.alioss.access-key-secret}
+
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}
+    mchid: ${sky.wechat.mchid}
+    mchSerialNo: ${sky.wechat.mchSerialNo}
+    #privateKeyFilePath: ${sky.wechat.privateKeyFilePath}
+    apiV3Key: ${sky.wechat.apiV3Key}
+    #weChatPayCertFilePath: ${sky.wechat.weChatPayCertFilePath}
+    notifyUrl: ${sky.wechat.notifyUrl}
+    refundNotifyUrl: ${sky.wechat.refundNotifyUrl}
