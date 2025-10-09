@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fengxiang.mapper.ShoppingCartMapper">
+    <!--根据用户id和商品id查询购物车数据-->
+    <select id="getByUserIdAndGoodId" resultType="com.fengxiang.entity.ShoppingCart">
+        select * from shopping_cart
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="goodId != null">
+                and good_id = #{goodId}
+            </if>
+        </where>
+    </select>
+
+    <!--根据用户id查询购物车数据-->
+    <select id="list" resultType="com.fengxiang.entity.ShoppingCart">
+        select * from shopping_cart
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
+</mapper>
