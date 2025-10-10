@@ -1,8 +1,9 @@
 package com.fengxiang.mapper;
 
 import com.fengxiang.entity.AddressBook;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface AddressBookMapper {
@@ -13,7 +14,50 @@ public interface AddressBookMapper {
      */
     @Insert("insert into address_book (user_id, consignee, sex, phone, province_code, province_name, " +
             "city_code, city_name, district_code, district_name, detail, label) values (#{userId}, " +
-            "#{consignee}, #{sex}, #{phone}, #{provinceCode}, #{provinceName}, #{cityCode}, #{cityName}, " +
+            "#{consignee}, #{sex}, #{phone}, #{provinceCode},   #{provinceName}, #{cityCode}, #{cityName}, " +
             "#{districtCode}, #{districtName}, #{detail}, #{label})")
     void insert(AddressBook addressBook);
+
+    /**
+     * 查询地址
+     * @param addressBook
+     * @return
+     */
+    List<AddressBook> list(AddressBook addressBook);
+
+    /**
+     * 根据id查询地址详情
+     * @param id
+     * @return
+     */
+    @Select("select * from address_book where id = #{id}")
+    AddressBook getAddressById(Long id);
+
+    /**
+     * 修改地址
+     * @param addressBook
+     */
+    void update(AddressBook addressBook);
+
+    /**
+     * 根据用户id和是否默认查询地址
+     * @param addressBook
+     * @return
+     */
+    @Select("select * from address_book where user_id = #{userId} and is_default = #{isDefault}")
+    AddressBook getAddressByUserIdAndIsDefault(AddressBook addressBook);
+
+    /**
+     * 将当前用户所有地址设置为非默认地址
+     * @param addressBook
+     */
+    @Update("update address_book set is_default = #{isDefault} where user_id = #{userId}")
+    void setIsDefaultByUserId(AddressBook addressBook);
+
+    /**
+     * 根据id删除地址
+     * @param id
+     */
+    @Delete("delete from address_book where id = #{id}")
+    void deleteById(Long id);
 }
