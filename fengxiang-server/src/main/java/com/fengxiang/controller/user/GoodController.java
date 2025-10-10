@@ -40,4 +40,18 @@ public class GoodController {
         List<GoodVO> GoodVOList = goodService.getByCategoryId(good);
         return Result.success(GoodVOList);
     }
+
+    /**
+     *  根据商品id查询商品详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/detail")
+    @ApiOperation("根据商品id查询商品详情")
+    public Result<GoodVO> getGoodDetail(Long id){
+        log.info("根据商品id查询商品详情:{}", id);
+        //获取商品详情
+        GoodVO goodVO = goodService.getById(id);
+        return Result.success(goodVO);
+    }
 }

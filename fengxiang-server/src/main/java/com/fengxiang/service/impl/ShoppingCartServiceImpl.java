@@ -6,11 +6,15 @@ import com.fengxiang.entity.Good;
 import com.fengxiang.entity.ShoppingCart;
 import com.fengxiang.mapper.GoodMapper;
 import com.fengxiang.mapper.ShoppingCartMapper;
+import com.fengxiang.result.Result;
 import com.fengxiang.service.ShoppingCartService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -91,4 +95,33 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Long id = BaseContext.getCurrentId();
         shoppingCartMapper.deleteByUserId(id);
     }
+
+    /**
+     * 购物车减一
+     * @param shoppingCartDTO
+     */
+    @Override
+    public void sub(ShoppingCartDTO shoppingCartDTO) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);
+
+        Long userId = BaseContext.getCurrentId();
+        shoppingCart.setUserId(userId);
+
+        //设置查询条件 判断是否为空
+        ShoppingCart cart = shoppingCartMapper.getByUserIdAndGoodId(shoppingCart);
+        if(cart != null){
+            //如果商品为1，则删除
+            if(cart.getNumber() == 1){
+                shoppingCartMapper.deleteById(cart.getId());
+            }else{
+                //不为1 则减少1后更新
+                cart.setNumber(cart.getNumber() - 1);
+                shoppingCartMapper.update(cart);
+            }
+
+        }
+    }
+
+
 }

@@ -1,10 +1,7 @@
 package com.fengxiang.mapper;
 
 import com.fengxiang.entity.ShoppingCart;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -42,8 +39,15 @@ public interface ShoppingCartMapper {
 
     /**
      * 根据用户id删除购物车数据
-     * @param currentId
+     * @param id
      */
     @Delete("delete from shopping_cart where user_id = #{id}")
     void deleteByUserId(Long id);
+
+    /**
+     * 根据id删除购物车数据
+     * @param id
+     */
+    @Delete("delete from shopping_cart where id = #{id}")
+    void deleteById(Long id);
 }
