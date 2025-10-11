@@ -1,7 +1,9 @@
 package com.fengxiang.service;
 
 import com.fengxiang.dto.OrdersPageQueryDTO;
+import com.fengxiang.dto.OrdersSubmitDTO;
 import com.fengxiang.result.PageResult;
+import com.fengxiang.vo.OrderSubmitVO;
 import com.fengxiang.vo.OrderVO;
 
 public interface OrderService {
@@ -19,4 +21,11 @@ public interface OrderService {
      * @return
      */
     OrderVO details(Long id);
+
+    /**
+     * 用户下单
+     * @param ordersSubmitDTO
+     * @return
+     */
+    OrderSubmitVO submit(OrdersSubmitDTO ordersSubmitDTO);
 }

@@ -24,4 +24,10 @@ public interface OrderDetailMapper {
      * @return
      */
     List<OrderDetail> getSalesTop10(Map map);
+
+    /**
+     * 批量插入订单明细
+     * @param orderDetailList
+     */
+    void insertBatch(List<OrderDetail> orderDetailList);
 }

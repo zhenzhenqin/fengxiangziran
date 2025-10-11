@@ -19,4 +19,14 @@
         order by sum(od.number) desc
         limit 10
     </select>
+
+    <!--批量插入订单详细数据-->
+    <insert id="insertBatch">
+        insert into order_detail (order_id, name, good_id, number, amount, image)
+        values
+        <foreach collection="list" item="orderDetail" separator=",">
+            (#{orderDetail.orderId}, #{orderDetail.name}, #{orderDetail.goodId},
+            #{orderDetail.number}, #{orderDetail.amount}, #{orderDetail.image})
+        </foreach>
+    </insert>
 </mapper>

@@ -38,11 +38,11 @@ public interface ShoppingCartMapper {
     List<ShoppingCart> list(ShoppingCart shoppingCart);
 
     /**
-     * 根据用户id删除购物车数据
-     * @param id
+     * 清空购物车数据
+     * @param userId
      */
-    @Delete("delete from shopping_cart where user_id = #{id}")
-    void deleteByUserId(Long id);
+    @Delete("delete from shopping_cart where user_id = #{userId}")
+    void deleteByUserId(Long userId);
 
     /**
      * 根据id删除购物车数据

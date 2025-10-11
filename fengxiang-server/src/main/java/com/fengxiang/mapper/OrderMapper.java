@@ -39,4 +39,10 @@ public interface OrderMapper {
      * @return
      */
     Integer getOrdersNumberByDateAndStatus(Map map);
+
+    /**
+     * 插入订单
+     * @param orders
+     */
+    void insert(Orders orders);
 }
