@@ -24,4 +24,14 @@
             </if>
         </where>
     </select>
+
+    <!--批量插入-->
+    <insert id="insertBatch" parameterType="list">
+        insert into shopping_cart
+        (name, image, user_id, good_id, number, amount, create_time)
+        values
+        <foreach collection="carts" item="sc" separator=",">
+            (#{sc.name},#{sc.image},#{sc.userId},#{sc.goodId},#{sc.number},#{sc.amount},#{sc.createTime})
+        </foreach>
+    </insert>
 </mapper>

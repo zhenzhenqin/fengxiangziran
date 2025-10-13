@@ -28,11 +28,11 @@ public class Orders implements Serializable {
     public static final Integer CANCELLED = 5;        // 已取消
 
     /**
-     * 支付状态 0未支付 1已支付 2退款
+     * 支付状态 0未支付 1已支付 6退款
      */
     public static final Integer UN_PAID = 0;
     public static final Integer PAID = 1;
-    public static final Integer REFUND = 2;
+    public static final Integer REFUND = 6;
 
     private static final long serialVersionUID = 1L;
 
