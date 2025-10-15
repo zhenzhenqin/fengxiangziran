@@ -11,6 +11,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class FengXiangApplication {
     public static void main(String[] args) {
         SpringApplication.run(FengXiangApplication.class, args);
-        log.info("server started");
+        System.out.println("(♥◠‿◠)ﾉﾞ  fengxiang激活成功   ლ(´ڡ`ლ)ﾞ  \n" +
+                "  __               _                           _   \n" +
+                " / _| ___ _ __ ___(_) __ _ _ __   __ _ ___  __| |  \n" +
+                "| |_ / _ \\ '__/ __| |/ _` | '_ \\ / _` / __|/ _` |  \n" +
+                "|  _|  __/ |  \\__ \\ | (_| | | | | (_| \\__ \\ (_| |  \n" +
+                "|_|  \\___|_|  |___/_|\\__, |_| |_|\\__,_|___/\\__,_|  \n" +
+                "                     |___/                          \n");
     }
 }
